@@ -1,29 +1,28 @@
-#include <ezLED.h> // ezLED library
 
-#define BUTTON_PIN 7
+const int buttonPin = 2;     
+const int ledPin =  3;     
 
-ezLED led(3);  // create a LED object that attach to pin 3
-
+int buttonState = 0;        
 void setup() {
   Serial.begin(9600);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+
+  pinMode(ledPin, OUTPUT);
+
+  pinMode(buttonPin, INPUT_PULLUP);
 }
-
 void loop() {
-  led.loop(); // MUST call the led.loop() function in loop()
 
-  int buttonState = digitalRead(BUTTON_PIN);
+  buttonState = digitalRead(buttonPin);
 
-  if (buttonState == LOW) {
-    led.turnON();       // turn on immediately
-    //led.turnON(1000); // turn on after 1 second
+  Serial.println(buttonState);
+
+  if (buttonState == HIGH) {
+    // turn LED off:
+    digitalWrite(ledPin, LOW);
   } else {
-    led.turnOFF();       // turn off immediately
-    //led.turnOFF(1000); // turn off after 1 second
+    // turn LED on:
+    digitalWrite(ledPin, HIGH);
   }
-
-  if (led.getOnOff() == LED_ON)
-    Serial.println("LED is ON");
-  else
-    Serial.println("LED is OFF");
+ // knipper effect
+  delay(500);
 }
